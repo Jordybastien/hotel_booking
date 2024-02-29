@@ -130,6 +130,7 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.2-x86_64-darwin)
       racc (~> 1.4)
+    pagy (6.5.0)
     pg (1.5.5)
     psych (5.1.2)
       stringio
@@ -202,6 +203,10 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    view_component (3.11.0)
+      activesupport (>= 5.2.0, < 8.0)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -224,6 +229,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  pagy
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.8, >= 7.0.8.1)
@@ -234,6 +240,7 @@ DEPENDENCIES
   tailwindcss-rails
   turbo-rails
   tzinfo-data
+  view_component
   web-console
 
 RUBY VERSION

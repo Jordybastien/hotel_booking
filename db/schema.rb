@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_29_060951) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_29_082706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_060951) do
     t.datetime "booked_until"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
     t.index ["hotel_id", "booked_until", "price"], name: "index_rooms_on_hotel_id_and_booked_until_and_price"
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
   end
