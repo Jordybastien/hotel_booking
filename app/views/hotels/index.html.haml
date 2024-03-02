@@ -3,4 +3,7 @@
     = render partial: "hotels/search_form"
   = render partial: "hotels/categories"
 .container.mx-auto
-  = render partial: "hotels/list"
+  - if @hotels.empty?
+    = render partial: "hotels/no_results"
+  - else
+    = render partial: "hotels/list"

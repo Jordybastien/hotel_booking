@@ -1,0 +1,11 @@
+= render Flyout::MenuComponent.new do |d|
+  - d.with_toggle do
+    .text-left.text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
+      %span.font-semibold.text-gray-700
+        = label
+      %span.font-regular.text-gray-500
+        = params[:filter]&.[](attribute.to_sym)&.presence || placeholder
+  - d.with_menu_content do
+    .flex.flex-col
+      = form.label label, class: "text-xs font-semibold text-gray-500 mb-2"
+      = form.text_field attribute, value: params[:filter]&.[](attribute.to_sym), class: "font-regular text-base border border-gray-100 rounded-md text-gray-600 focus:outline-none focus:ring-none", **input_options

@@ -1,0 +1,7 @@
+.flex.flex-col.w-full.justify-center.items-center.pb-12
+  = image_tag "not-found.svg", class: "w-72 h-72"
+  %h1.text-xl.text-gray-600.font-semibold.-mt-8
+    No hotels found
+  %p.text-base.text-gray-500.font.regular
+    Try again with a different search input.
+  = link_to "Clear filter", root_path, class: "bg-rose-500 text-white px-8 py-4 rounded-md mt-8"
