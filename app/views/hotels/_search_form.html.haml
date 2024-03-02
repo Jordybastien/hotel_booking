@@ -1,24 +1,50 @@
 .border.w-full.mx-auto.py-1.rounded-full.shadow-md.transition.cursor-pointer.text-gray-600.group{class: "xl:w-1/2"}
-  .flex.flex-row.items-center.justify-between.divide-x.divide-gray-100
-    .px-1.w-full
-      .text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
-        %span.font-semibold.text-gray-700 Check in
-        %span.font-regular.text-gray-500 Add dates
-    .px-1.w-full
-      .text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
-        %span.font-semibold.text-gray-700 Check out
-        %span.font-regular.text-gray-500 Add dates
-    .px-1.w-full
-      .text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
-        %span.font-semibold.text-gray-700 Who
-        %span.font-regular.text-gray-500 Add guests
-    .px-1.w-full
-      .text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
-        %span.font-semibold.text-gray-700 How much
-        %span.font-regular.text-gray-500 Add price
-    .text-sm.pl-6.pr-2.flex.flex-row.items-center.gap-3
-      .w-24.flex.justify-end
-        .p-4.group-hover:p-3.bg-rose-500.rounded-full.text-white.flex.flex-row.items-center.group-hover:gap-x-2.w-12.h-12.group-hover:w-auto.transition.duration-400.ease-in-out
-          = image_tag "search.png", class: "h-4 w-4"
-          %span.opacity-0.group-hover:opacity-100.transition.duration-400.ease-in-ou.delay-100
-            Search
+  = form_with url: root_path, scope: :filter, method: :get, class: "mb-0" do |form|
+    .flex.flex-row.items-center.justify-between.divide-x.divide-gray-100
+      .px-1.w-full
+        = render Flyout::MenuComponent.new do |d|
+          - d.with_toggle do
+            .text-left.text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
+              %span.font-semibold.text-gray-700 Check in
+              %span.font-regular.text-gray-500 Add dates
+          - d.with_menu_content do
+            .flex.flex-col
+              = form.label :check_in, "Check in", class: "text-xs font-semibold text-gray-500 mb-2"
+              -# TODO: Use stimulus-flatpickr
+              = form.text_field :check_in, type: "date", class: "font-regular text-base border border-gray-100 rounded-md text-gray-600 focus:outline-none focus:ring-none"
+      .px-1.w-full
+        = render Flyout::MenuComponent.new do |d|
+          - d.with_toggle do
+            .text-left.text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
+              %span.font-semibold.text-gray-700 Check out
+              %span.font-regular.text-gray-500 Add dates
+          - d.with_menu_content do
+            .flex.flex-col
+              = form.label :check_out, "Check out", class: "text-xs font-semibold text-gray-500 mb-2"
+              = form.text_field :check_out, type: "date", class: "font-regular text-base border border-gray-100 rounded-md text-gray-600 focus:outline-none focus:ring-none"
+      .px-1.w-full
+        = render Flyout::MenuComponent.new do |d|
+          - d.with_toggle do
+            .text-left.text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
+              %span.font-semibold.text-gray-700 How many
+              %span.font-regular.text-gray-500 Add rooms
+          - d.with_menu_content do
+            .flex.flex-col
+              = form.label :rooms_count, "Rooms", class: "text-xs font-semibold text-gray-500 mb-2"
+              = form.text_field :rooms_count, type: "number", class: "font-regular text-base border border-gray-100 rounded-md text-gray-600 focus:outline-none focus:ring-none"
+      .px-1.w-full
+        = render Flyout::MenuComponent.new do |d|
+          - d.with_toggle do
+            .text-left.text-xs.flex-1.hover:bg-gray-100.h-full.flex.flex-col.px-6.gap-y-1.py-2.transition.duration-300.ease-in-out.rounded-full
+              %span.font-semibold.text-gray-700 How much
+              %span.font-regular.text-gray-500 Set price
+          - d.with_menu_content do
+            .flex.flex-col
+              = form.label :price, "Price($)", class: "text-xs font-semibold text-gray-500 mb-2"
+              = form.text_field :price, type: "number", class: "font-regular text-base border border-gray-100 rounded-md text-gray-600 focus:outline-none focus:ring-none"
+      .text-sm.pl-6.pr-2.flex.flex-row.items-center.gap-3
+        .w-24.flex.justify-end
+          = button_tag class: "p-4 group-hover:p-3 bg-rose-500 rounded-full text-white flex flex-row items-center group-hover:gap-x-2 w-12 h-12 group-hover:w-auto transition duration-400 ease-in-out" do
+            = image_tag "search.png", class: "h-4 w-4"
+            %span.opacity-0.group-hover:opacity-100.transition.duration-400.ease-in-ou.delay-100
+              Search

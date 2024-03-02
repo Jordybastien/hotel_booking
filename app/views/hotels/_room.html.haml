@@ -1,4 +1,4 @@
-.col-span-1.cursor-pointer.group.flex.flex-col.gap-y-4
+= link_to room_path(room), class: "col-span-1 cursor-pointer group flex flex-col gap-y-4", data: {turbo_action: "advance"} do
   = image_tag "#{room.image_url}?im_w=720", class: "h-full h-64 rounded-lg transform group-hover:scale-105 transition duration-500 ease-in-out"
   .flex.flex-col.text-base
     %span.font-medium.text-gray-800

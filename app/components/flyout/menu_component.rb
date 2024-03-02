@@ -1,34 +1,30 @@
 # frozen_string_literal: true
-
-require 'view_component/base'
-
 class Flyout::MenuComponent < ViewComponent::Base
+  renders_one :toggle
+
   renders_one :menu_content
 
-  renders_one :toggle, -> do
-    button_tag type: "button", data: { controller: "flyout" }, class: "relative focus:outline-none"
+  def content_wrapper_options
+    {
+      class: "block relative",
+      data: { controller: "flyout-menu" }
+    }
   end
 
-  def initialize
-    @toggle_open = false
+  def toggle_btn_wrapper_options
+    {
+      data: { action:"flyout-menu#toogleMenu" },
+      type: "button"
+    }
   end
 
-#   def render
-#     button_tag type: "button", data: { controller: "flyout" }, class: "relative focus:outline-none", &method(:render_toggle) +
-#       div(class: "absolute top-0 left-0 w-full h-full bg-gray-900/50 opacity-0 transition-all duration-150 ease-in-out pointer-events-none z-50",
-#            data: { controller: "flyout", target: "flyout" },
-#            &method(:render_content))
-#   end
-
-#   private
-
-#   def render_toggle
-#     toggle
-#   end
-
-#   def render_content
-#     return unless @toggle_open
-
-#     div(class: "absolute top-full left-0 right-0 z-50 bg-white shadow-md rounded-lg overflow-hidden", &method(:content))
-#   end
+  def menu_wrapper_options
+    {
+      class: "hidden absolute shadow-xl p-4 rounded-md border border-gray-50 w-fit bg-white z-50 mt-4",
+      data: {
+        action: "keyup@window->flyout-menu#closeWithKeyboard click@window->flyout-menu#closeBackground", 
+        flyout_menu_target: "menu"
+      }
+    }
+  end
 end
