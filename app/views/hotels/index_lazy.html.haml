@@ -1,0 +1,5 @@
+= turbo_frame_tag :hotels_lazy do
+  - if @hotels.empty?
+    = render partial: "hotels/no_results"
+  - else
+    = render partial: "hotels/list"

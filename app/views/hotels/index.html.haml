@@ -3,7 +3,14 @@
     = render partial: "hotels/search_form"
   = render partial: "hotels/categories"
 .container.mx-auto
-  - if @hotels.empty?
-    = render partial: "hotels/no_results"
-  - else
-    = render partial: "hotels/list"
+  = turbo_frame_tag :hotels_lazy, src: hotels_index_lazy_path(request.query_parameters), loading: :lazy do
+    .flex.flex-col.justify-center.items-center
+      .loading-spinner
+      .text-center.text-gray-400.mb-4
+        loading...
+    .animate-pulse.grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-3.xl:grid-cols-4.2xl:grid-cols-5.gap-x-8.gap-y-12.overflow-x-hidden.py-4.mb-4
+      .p-2.w-full.bg-gray-200.mb-2.rounded-md.h-64
+      .p-2.w-full.bg-gray-200.mb-2.rounded-md.h-64
+      .p-2.w-full.bg-gray-200.mb-2.rounded-md.h-64
+      .p-2.w-full.bg-gray-200.mb-2.rounded-md.h-64
+      .p-2.w-full.bg-gray-200.mb-2.rounded-md.h-64

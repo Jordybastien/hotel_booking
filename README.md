@@ -4,7 +4,7 @@ This guide will walk you through the steps to get the application up and running
 
 ## Concepts Covered/interacted with
 
-1. Hotwire/Stimulus: The application utilizes Hotwire and Stimulus for seamless, live-updating user interfaces.
+1. Hotwire/Stimulus: The application utilizes Hotwire and Stimulus for seamless, live-updating user interfaces(lazy-loading items, display modals).
 
 2. Minor Use of Presenters: Presenters are used sparingly to enhance the view layer with cleaner, more maintainable code.
 

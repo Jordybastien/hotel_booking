@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "hotels#index"
+  get 'hotels/index_lazy', to: 'hotels#index_lazy'
 
   resources :hotels do
     resources :reservations, only: [:create, :new]

@@ -3,6 +3,9 @@ class HotelsController < ApplicationController
 
   def index
     # TODO: Add infinite-scroll pagination later on
+  end
+
+  def index_lazy
     @hotels = Hotel.bookable.order(price: :asc)
 
     @hotels = @hotels.by_city(filter_params[:city]) if filter_params[:city].present?
