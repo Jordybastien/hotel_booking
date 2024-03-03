@@ -1,0 +1,10 @@
+.fixed.inset-0.bg-gray-900.z-50.overflow-y-auto.overflow-x-hidden.flex.justify-center.items-center.bg-opacity-70
+  = content_tag(:div, class: "bg-white rounded-md p-4 lg:px-32 xl:px-48 text-center flex flex-col justify-center items-center py-12 w-full lg:w-1/2") do
+    = image_tag "done.svg", class: "w-72 h-72"
+    %h1.text-xl.text-gray-600.font-semibold.-mt-8
+      Booked Successfully
+    %p.text-base.text-gray-500.font.regular
+      You have successfully placed your booking, We will send you booking details shortly.
+      %br
+      Click the button below to continue
+    = link_to "Continue", root_path, class: "bg-rose-500 text-white px-8 py-4 rounded-md mt-8", data: {turbo_action: "replace"}

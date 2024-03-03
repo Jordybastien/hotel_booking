@@ -1,0 +1,29 @@
+class Reservation < ApplicationRecord
+  belongs_to :hotel, validate: true
+
+  validates :first_name, :last_name, :phone, :email, presence: true
+  validates :email, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+  validates :arrival_date, :departure_date, presence: true
+  validates :number_of_rooms, presence: true, numericality: { only_integer: true, greater_than: 0 }
+
+  validate :available_rooms?
+  validate :departure_after_arrival?
+  validate :arrival_date_in_the_past?
+
+  private
+
+  def available_rooms?
+    # In another world we'd need to rely on rooms bookability(dates) but here we're keeping it simple and relying on number_of_rooms as it will be reduced on a successfull reservation.
+    return if number_of_rooms <= hotel.number_of_rooms
+
+    errors.add(:number_of_rooms, "are not available in this hotel, you can only have #{hotel.number_of_rooms} rooms")
+  end
+
+  def departure_after_arrival?
+    errors.add(:departure_date, 'must be after arrival date') if departure_date < arrival_date
+  end
+
+  def arrival_date_in_the_past?
+    errors.add(:arrival_date, 'can not be in the past') if arrival_date < Date.today
+  end
+end

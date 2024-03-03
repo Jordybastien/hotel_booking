@@ -1,4 +1,4 @@
-= link_to hotel.bookable? ? hotel_path(hotel, request.query_parameters) : "#", class: "col-span-1 cursor-pointer group flex flex-col gap-y-4 relative", data: {turbo_action: "advance"} do
+= link_to hotel.bookable? ? new_hotel_reservation_path(hotel, request.query_parameters) : "#", class: "col-span-1 cursor-pointer group flex flex-col gap-y-4 relative", data: {turbo_action: "advance"} do
   = image_tag "#{hotel.image_url}?im_w=720", class: class_names("h-full h-64 rounded-lg transform group-hover:scale-105 transition duration-500 ease-in-out", "blur-sm brightness-50 grayscale": !hotel.bookable?)
   .flex.flex-col.text-base
     %span.font-medium.text-gray-800
@@ -7,7 +7,11 @@
       = hotel.city
     %span.font-regular.text-gray-500.text-sm
       - if hotel.bookable?
-        Available
+        %span.gap-x-0
+          Available
+          &="("
+          = hotel.number_of_rooms
+          &=") rooms"
       - else
         Unavailable
     %span.font-medium.text-gray-800

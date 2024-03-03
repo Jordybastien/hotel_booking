@@ -1,0 +1,8 @@
+%div{class: class_names("w-full my-2 drop-shadow-lg rounded-md border-2 p-2 md:p-4 flex flex-row items-start justify-between", container_style)}
+  .flex.items-start
+    = image_tag icon, class:"h-10 md:h-12"
+    .flex.flex-col.ml-2.md:ml-4
+      %span{class: class_names("font-semibold text-xl", title_style)}
+        = @title
+      %span.font-regular.text-base.text-gray-500
+        = message

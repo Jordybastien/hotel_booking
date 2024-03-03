@@ -1,0 +1,44 @@
+- present(@hotel) do |item|
+  .max-w-5xl.container.mx-auto.z-50.py-4.sticky.top-20.bg-white.my-12
+    .w-full.grid.grid-cols-5.gap-4
+      .col-span-3.h-full.flex.items-center
+        .flex.flex-col.gap-y-4
+          .flex.flex-col
+            %span.font-medium.text-gray-800.text-xl
+              = item.description
+            .text-xl.text-rose-600.font-semibold
+              = item.formatted_price
+          = image_tag "#{@hotel.image_url}?im_w=1200", class: "rounded-md"
+      .col-span-2.w-full.h-full.flex.items-center.flex-col.gap-y-2
+        = render Alert::Banner.new(type: :error, title: "Errors", body: @reservation.errors.full_messages) if @reservation.errors.any?
+        .shadow-lg.p-4.rounded-md.border.border-border-gray-100.flex.flex-col.w-full
+          .text-lg.text-gray-600.font-semibold
+            Make Reservation
+          = form_with model: @reservation, url: hotel_reservations_path, scope: :reservation, method: :post, class: "mt-4" do |form|
+            .flex.flex-col.border.border-gray-100.rounded-md
+              .flex.flex-row.divide-x.divide-gray-100
+                .flex.flex-col.px-4.py-2
+                  = form.label :arrival_date, "Check in", class: "text-xs font-medium text-gray-500 mb-2"
+                  = form.text_field :arrival_date, type: "date", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none", required: true
+                .flex.flex-col.px-4.py-2
+                  = form.label :departure_date, "Check out", class: "text-xs font-medium text-gray-500 mb-2"
+                  = form.text_field :departure_date, type: "date", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none", required: true
+              .flex.flex-col.px-4.py-2.border-t.border-gray-100
+                = form.label :number_of_rooms, "Rooms", class: "text-xs font-medium text-gray-500 mb-2"
+                = form.text_field :number_of_rooms, type: "number", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none", required: true
+              .flex.flex-col.px-4.py-2.border-t.border-gray-100
+                = form.label :first_name, "First Name", class: "text-xs font-medium text-gray-500 mb-2"
+                = form.text_field :first_name, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none", autofocus: true
+              .flex.flex-col.px-4.py-2.border-t.border-gray-100
+                = form.label :last_name, "Last Name", class: "text-xs font-medium text-gray-500 mb-2"
+                = form.text_field :last_name, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none"
+              .flex.flex-col.px-4.py-2.border-t.border-gray-100
+                = form.label :email, "Email", class: "text-xs font-medium text-gray-500 mb-2"
+                = form.text_field :email, type: "email", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none"
+              .flex.flex-col.px-4.py-2.border-t.border-gray-100
+                = form.label :phone, "Phone number", class: "text-xs font-medium text-gray-500 mb-2"
+                = form.text_field :phone, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none"
+              = form.hidden_field :hotel_id, value: @hotel.id
+            = form.submit "Save", class: "p-4 bg-rose-500 rounded-md text-white w-full mt-8 cursor-pointer"
+
+= turbo_frame_tag "success_modal"
