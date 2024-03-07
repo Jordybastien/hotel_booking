@@ -7,6 +7,6 @@ class HotelPresenter < BasePresenter
   end
 
   def formatted_price
-    "$ #{price} night"
+    "$ #{price_per_room} night"
   end
 end

@@ -1,12 +1,21 @@
 class Hotel < ApplicationRecord
   has_many :rooms
 
-  scope :bookable, -> { where('number_of_rooms > 0') }
-  scope :by_city, ->(city) { where(city: city) }
-  scope :by_price, ->(price) { where('price <= ?', price) }
-  scope :with_rooms, ->(rooms_count) { where('number_of_rooms >= ?', rooms_count) }
+  MIN_ROOM_COUNT = 1
 
-  def bookable?
-    number_of_rooms.positive?
+  scope :by_price, ->(price) { where('price_per_room <= ?', price) }
+
+  scope :with_available_rooms, ->(rooms_count = MIN_ROOM_COUNT, arrival_date = Reservation::DEFAULT_ARRIVAL_DATE, departure_date = Reservation::DEFAULT_DEPARTURE_DATE) {
+    joins(:rooms).merge(Room.available_between(arrival_date, departure_date)).group('hotels.id').having('count(rooms.id) >= ?', rooms_count)
+  }
+
+  def number_of_rooms(arrival_date = Reservation::DEFAULT_ARRIVAL_DATE, departure_date = Reservation::DEFAULT_DEPARTURE_DATE)
+    return rooms.count if arrival_date.nil? || departure_date.nil?
+
+    rooms.available_between(arrival_date, departure_date).count
+  end
+
+  def available_rooms(arrival_date = Reservation::DEFAULT_ARRIVAL_DATE, departure_date = Reservation::DEFAULT_DEPARTURE_DATE, number_of_rooms = nil)
+    rooms.available_between(arrival_date, departure_date).limit(number_of_rooms || MIN_ROOM_COUNT)
   end
 end

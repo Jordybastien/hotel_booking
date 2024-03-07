@@ -1,4 +1,7 @@
 class Reservation < ApplicationRecord
+  DEFAULT_ARRIVAL_DATE = Date.today
+  DEFAULT_DEPARTURE_DATE = DEFAULT_ARRIVAL_DATE + 1.day
+
   has_many :room_reservations
   has_many :rooms, through: :room_reservations
 
@@ -10,6 +13,16 @@ class Reservation < ApplicationRecord
   validate :available_rooms?
   validate :departure_after_arrival?
   validate :arrival_date_in_the_past?
+
+  accepts_nested_attributes_for :room_reservations
+
+  scope :placed_between, ->(arrival_date = DEFAULT_ARRIVAL_DATE, departure_date = DEFAULT_DEPARTURE_DATE) {
+    where(
+      'arrival_date < :departure_date AND departure_date > :arrival_date',
+      arrival_date: arrival_date,
+      departure_date: departure_date
+    )
+  }
 
   private
 

@@ -6,7 +6,7 @@ class Flyout::MenuComponent < ViewComponent::Base
 
   def content_wrapper_options
     {
-      class: "block relative",
+      class: "block relative w-full",
       data: { controller: "flyout-menu" }
     }
   end
@@ -14,7 +14,8 @@ class Flyout::MenuComponent < ViewComponent::Base
   def toggle_btn_wrapper_options
     {
       data: { action:"flyout-menu#toogleMenu" },
-      type: "button"
+      type: "button",
+      class: "w-full"
     }
   end
 

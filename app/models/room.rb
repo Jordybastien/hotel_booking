@@ -5,13 +5,9 @@ class Room < ApplicationRecord
   has_many :room_reservations
   has_many :reservations, through: :room_reservations
 
-  scope :available_between, ->(arrival_date, departure_date) { where.not(booked_until: arrival_date...departure_date) }
-
-  def book(until_date)
-    update(booked_until: until_date)
-  end
-
-  def bookable?
-    booked_until.nil? || booked_until <= Time.current
-  end
+  scope :available_between, ->(arrival_date = Reservation::DEFAULT_ARRIVAL_DATE, departure_date = Reservation::DEFAULT_DEPARTURE_DATE) {
+    where.not(
+      id: RoomReservation.placed_between(arrival_date, departure_date).pluck(:room_id)
+    )
+  }
 end
