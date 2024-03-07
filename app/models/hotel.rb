@@ -1,6 +1,5 @@
 class Hotel < ApplicationRecord
-  # has_many :rooms
-  has_many :reservations, dependent: :destroy
+  has_many :rooms
 
   scope :bookable, -> { where('number_of_rooms > 0') }
   scope :by_city, ->(city) { where(city: city) }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_03_062647) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_07_201404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,8 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_03_062647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
-    t.integer "number_of_rooms"
-    t.integer "price"
     t.index ["city"], name: "index_hotels_on_city"
   end
 
@@ -30,26 +28,32 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_03_062647) do
     t.string "last_name", null: false
     t.string "phone", null: false
     t.string "email", null: false
-    t.bigint "hotel_id", null: false
     t.date "arrival_date", null: false
     t.date "departure_date", null: false
-    t.integer "number_of_rooms", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotel_id"], name: "index_reservations_on_hotel_id"
+    t.boolean "is_paid", default: false
+  end
+
+  create_table "room_reservations", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "reservation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_room_reservations_on_reservation_id"
+    t.index ["room_id"], name: "index_room_reservations_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
     t.bigint "hotel_id", null: false
     t.integer "price", null: false
-    t.datetime "booked_until"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_url"
-    t.index ["hotel_id", "booked_until", "price"], name: "index_rooms_on_hotel_id_and_booked_until_and_price"
+    t.string "room_type"
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
   end
 
-  add_foreign_key "reservations", "hotels"
+  add_foreign_key "room_reservations", "reservations"
+  add_foreign_key "room_reservations", "rooms"
   add_foreign_key "rooms", "hotels"
 end

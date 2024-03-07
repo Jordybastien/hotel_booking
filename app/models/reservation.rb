@@ -1,5 +1,6 @@
 class Reservation < ApplicationRecord
-  belongs_to :hotel, validate: true
+  has_many :room_reservations
+  has_many :rooms, through: :room_reservations
 
   validates :first_name, :last_name, :phone, :email, presence: true
   validates :email, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
