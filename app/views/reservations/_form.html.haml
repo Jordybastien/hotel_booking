@@ -3,19 +3,20 @@
   .shadow-lg.p-4.rounded-md.border.border-border-gray-100.flex.flex-col.w-full
     .text-lg.text-gray-600.font-semibold
       Add Personal details
-    = form_with model: @reservation, url: hotel_reservations_path, scope: :reservation, method: :post, class: "mt-4" do |form|
+    = form_with model: @reservation, url: hotel_reservations_path(request.query_parameters), scope: :reservation, method: :post, class: "mt-4" do |form|
       .flex.flex-col.border.border-gray-100.rounded-md
         .flex.flex-col.px-4.py-2.border-t.border-gray-100
           = form.label :first_name, "First Name", class: "text-xs font-medium text-gray-500 mb-2"
-          = form.text_field :first_name, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none", autofocus: true
+          = form.text_field :first_name, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none w-full", autofocus: true
         .flex.flex-col.px-4.py-2.border-t.border-gray-100
           = form.label :last_name, "Last Name", class: "text-xs font-medium text-gray-500 mb-2"
-          = form.text_field :last_name, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none"
+          = form.text_field :last_name, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none w-full"
         .flex.flex-col.px-4.py-2.border-t.border-gray-100
           = form.label :email, "Email", class: "text-xs font-medium text-gray-500 mb-2"
-          = form.text_field :email, type: "email", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none"
+          = form.text_field :email, type: "email", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none w-full"
         .flex.flex-col.px-4.py-2.border-t.border-gray-100
           = form.label :phone, "Phone number", class: "text-xs font-medium text-gray-500 mb-2"
-          = form.text_field :phone, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none"
-          = form.hidden_field :hotel_id, value: @hotel.id
+          = form.text_field :phone, type: "text", class: "font-regular text-sm border-none text-gray-600 focus:outline-none focus:ring-none w-full"
+        - @available_rooms_for_reservation.each do |room|
+          = form.hidden_field "room_ids", value: room.id, multiple: true
       = form.submit "Save", class: "p-4 bg-rose-500 rounded-md text-white w-full mt-8 cursor-pointer"

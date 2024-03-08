@@ -1,10 +1,16 @@
 .flex.flex-col.gap-y-2
-  .block.text-lg.text-gray-600.font-semibold
-    = @requested_rooms.count
+  .block.text-lg.text-gray-600.font-regular
+    = @available_rooms_for_reservation.count
     rooms selected
   .flex.flex-wrap.gap-4
-    - @requested_rooms.each_with_index do |room, idx|
+    - @available_rooms_for_reservation.each_with_index do |room, idx|
       .flex.flex-col.border.border-gray-100.shadow-sm.rounded-md.p-4.gap-y-2
         = image_tag "hotel-room.png", class: "w-4 h-4"
         .text-sm.text-gray-500
           Room #{idx + 1}
+  .block.border-t.border-gray-100.pt-4
+    .text-base.text-gray-600.font-semibold
+      Grand Total
+    .text-rose-600.text-xl.font-semibold
+      $
+      = @total_price

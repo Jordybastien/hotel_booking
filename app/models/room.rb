@@ -7,7 +7,7 @@ class Room < ApplicationRecord
 
   scope :available_between, ->(arrival_date = Reservation::DEFAULT_ARRIVAL_DATE, departure_date = Reservation::DEFAULT_DEPARTURE_DATE) {
     where.not(
-      id: RoomReservation.placed_between(arrival_date, departure_date).pluck(:room_id)
+      id: RoomReservation.overlapping_reservations(arrival_date, departure_date).pluck(:room_id)
     )
   }
 end

@@ -1,6 +1,7 @@
 class Reservation < ApplicationRecord
   DEFAULT_ARRIVAL_DATE = Date.today
   DEFAULT_DEPARTURE_DATE = DEFAULT_ARRIVAL_DATE + 1.day
+  MIN_ROOM_COUNT = 1
 
   has_many :room_reservations
   has_many :rooms, through: :room_reservations
@@ -8,15 +9,14 @@ class Reservation < ApplicationRecord
   validates :first_name, :last_name, :phone, :email, presence: true
   validates :email, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
   validates :arrival_date, :departure_date, presence: true
-  validates :number_of_rooms, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
-  validate :available_rooms?
+  # validate :available_rooms?
   validate :departure_after_arrival?
   validate :arrival_date_in_the_past?
 
-  accepts_nested_attributes_for :room_reservations
+  accepts_nested_attributes_for :room_reservations, reject_if: :all_blank
 
-  scope :placed_between, ->(arrival_date = DEFAULT_ARRIVAL_DATE, departure_date = DEFAULT_DEPARTURE_DATE) {
+  scope :date_range_overlap, ->(arrival_date = DEFAULT_ARRIVAL_DATE, departure_date = DEFAULT_DEPARTURE_DATE) {
     where(
       'arrival_date < :departure_date AND departure_date > :arrival_date',
       arrival_date: arrival_date,
@@ -28,9 +28,9 @@ class Reservation < ApplicationRecord
 
   def available_rooms?
     # In another world we'd need to rely on rooms bookability(dates) but here we're keeping it simple and relying on number_of_rooms as it will be reduced on a successfull reservation.
-    return if number_of_rooms <= hotel.number_of_rooms
+    return if number_of_rooms <= hotel.available_number_of_rooms
 
-    errors.add(:number_of_rooms, "are not available in this hotel, you can only have #{hotel.number_of_rooms} rooms")
+    errors.add(:number_of_rooms, "are not available in this hotel, you can only have #{hotel.available_number_of_rooms} rooms")
   end
 
   def departure_after_arrival?

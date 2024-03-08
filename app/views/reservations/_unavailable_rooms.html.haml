@@ -1,0 +1,8 @@
+.max-w-5xl.container.mx-auto.py-4.bg-white.my-12.flex.justify-center.items-center
+  = content_tag(:div, class: "bg-white rounded-md p-4 text-center flex flex-col justify-center items-center py-12 w-full") do
+    = image_tag "error.svg", class: "w-72 h-72"
+    %h1.text-xl.text-gray-600.font-semibold.-mt-12
+      Rooms unavailable
+    = content_tag(:div, class: "w-full lg:w-1/2 mx-auto mt-4") do
+      %p.text-base.text-gray-500.font.regular
+        The requested rooms are currently unavailable in the hotel #{@hotel.name}. Please try again with at least #{@available_rooms_for_reservation.count} rooms.
