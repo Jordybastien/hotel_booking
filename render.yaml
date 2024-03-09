@@ -1,6 +1,6 @@
 databases:
   - name: hotels_booking
-    databaseName: hotels_booking_rfie
+    databaseName: hotels_booking_rfie_vje9
     user: super_user
     plan: free
 
