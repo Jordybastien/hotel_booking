@@ -21,6 +21,17 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def filter_rooms
+    if @number_of_rooms <= @available_rooms_for_reservation.count
+      render turbo_stream: [
+        turbo_stream.update(:requested_rooms_info, partial: "reservations/requested_rooms", locals: { rooms: @available_rooms_for_reservation, total_price: @total_price }),
+        turbo_stream.update(:requested_rooms_form, partial: "reservations/form", locals: { rooms: @available_rooms_for_reservation }),
+      ]
+    else
+      render turbo_stream: turbo_stream.replace("unavailable_rooms", partial: "reservations/unavailable_rooms_modal")
+    end
+  end
+
   private
 
   def set_hotel

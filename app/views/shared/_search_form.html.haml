@@ -21,6 +21,6 @@
                 = is_hotel_selected ? "Update" : "Search"
   - if params[:filter].present?
     .flex.text-xs.text-ellipsis.border-b.border-gray-400
-      = link_to root_path, data: {turbo_action: "replace"}, class: "flex flex-row items-center gap-x-1" do
+      = link_to clear_filter_url, data: {turbo_action: "replace"}, class: "flex flex-row items-center gap-x-1" do
         = image_tag "times.svg", class:"h-2 w-2"
         Clear filter

@@ -1,6 +1,6 @@
 .w-full.container.mx-auto.z-50.w-full.py-4.sticky.top-20.bg-white
   .border-b.pb-6
-    = render partial: "shared/search_form", locals: { url: root_path, method: :get, scope: :filter }
+    = render partial: "shared/search_form", locals: { url: root_path, method: :get, scope: :filter, clear_filter_url: root_path }
   = render partial: "hotels/categories"
 .container.mx-auto
   = turbo_frame_tag :hotels_lazy, src: hotels_index_lazy_path(request.query_parameters), loading: :lazy do

@@ -1,9 +1,9 @@
 .border-b.pb-6.z-50.sticky.top-20.bg-white
-  = render partial: "shared/search_form", locals: { url: new_hotel_reservation_path(@hotel, request.query_parameters), method: :get, scope: :filter }
+  = render partial: "shared/search_form", locals: { url: new_hotel_reservation_path(@hotel, request.query_parameters), method: :get, scope: :filter, clear_filter_url: new_hotel_reservation_path(@hotel) }
 
 - if @number_of_rooms <= @available_rooms_for_reservation.count
   - present(@hotel) do |item|
-    .max-w-5xl.container.mx-auto.z-40.py-4.sticky.top-20.bg-white.my-12
+    .max-w-5xl.container.mx-auto.z-30.py-4.sticky.top-20.bg-white.my-12
       .w-full.grid.grid-cols-5.gap-4
         .col-span-3.h-full.flex.items-center
           .flex.flex-col.gap-y-4
@@ -13,10 +13,13 @@
                 = item.description
               .text-sm.text-rose-600.font-semibold
                 = item.formatted_price
-            = render partial: "reservations/requested_rooms"
+            = turbo_frame_tag :requested_rooms_info do
+              = render partial: "reservations/requested_rooms", locals: { rooms: @available_rooms_for_reservation, total_price: @total_price }
         .col-span-2.w-full.h-full.flex.items-center.flex-col.gap-y-2
-          = render partial: "reservations/form"
+          = turbo_frame_tag :requested_rooms_form, class: "w-full" do
+            = render partial: "reservations/form", locals: { rooms: @available_rooms_for_reservation, reservation: @reservation }
 - else
   = render partial: "reservations/unavailable_rooms"
 
 = turbo_frame_tag "success_modal"
+= turbo_frame_tag "unavailable_rooms"

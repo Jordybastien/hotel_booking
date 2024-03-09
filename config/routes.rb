@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'hotels/index_lazy', to: 'hotels#index_lazy'
 
   resources :hotels do
+    get 'filter_rooms', to: 'reservations#filter_rooms'
     resources :reservations, only: [:create, :new]
   end
 end
